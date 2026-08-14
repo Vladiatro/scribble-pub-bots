@@ -1,19 +1,22 @@
 {
   "name": "hello-world",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node24 --outfile=dist/index.js"
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node24 --outfile=dist/index.js",
+    "dev": "NODE_ENV=development tsx watch src/index.ts"
   },
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@scribble-pub/bot-sdk": "^0.1.0",
+    "@scribble-pub/bot-sdk": "^0.2.0",
     "hono": "^4.13.1",
     "typescript": "^7.0.2"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2"
+    "@hono/node-server": "^2.1.1",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.12"
   }
 }
