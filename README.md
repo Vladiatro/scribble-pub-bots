@@ -5,5 +5,4 @@ My collection of bots for [scribble.pub](https://scribble.pub), a multiplayer dr
 ## Current Bots
 
 * **[hello-world](./bots/hello-world)**: A simple example bot that echoes messages back.
-
-*(More bots coming very soon!)*
+* **[drawing-timelapse-video-generator](./bots/drawing-timelapse-video-generator)**: Generates a timelapse video of a drawing. More an experiment with ffmpeg rather than production-ready code.

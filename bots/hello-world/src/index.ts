@@ -14,7 +14,7 @@ const bot = new ScribblePubBot({token: BOT_TOKEN, baseUrl: process.env.BASE_URL}
 bot.on("hook", (req) => {
     return [
         {
-            type: "addMessage",
+            type: "chat.addMessage",
             text: `Hi ${req.trigger.username}! You wrote '${req.trigger.text}' to me.`,
         },
     ]
