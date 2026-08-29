@@ -7,6 +7,7 @@ on:
     paths:
       - 'bots/hello-world/**'
       - '.github/workflows/hello-world-deploy.yml'
+  workflow_dispatch:
 
 jobs:
   deploy:
