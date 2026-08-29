@@ -10,7 +10,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@scribble-pub/bot-sdk": "^0.3.0",
+    "@scribble-pub/bot-sdk": "^0.4.0",
     "hono": "^4.13.1",
     "typescript": "^7.0.2"
   },

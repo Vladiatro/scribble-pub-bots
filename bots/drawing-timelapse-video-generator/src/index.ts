@@ -14,8 +14,8 @@ if (!BOT_TOKEN) {
 const bot = new ScribblePubBot({token: BOT_TOKEN, baseUrl: process.env.BASE_URL})
 const renderer = new Renderer(bot)
 
-bot.on("hook", async (req) => {
-    const enqueueMessage = renderer.enqueueExport(req.trigger.room, req.trigger.username)
+bot.on("chat.addressed", (trigger) => {
+    const enqueueMessage = renderer.enqueueExport(trigger.room, trigger.username)
     if (enqueueMessage) {
         return [
             {

@@ -116,10 +116,10 @@ export default class Renderer {
             }
         })
 
-        const roomState = await this.spBot.getRoomState(item.room)
-        if (!roomState.scratchpad.sessionMeta) return
+        const scratchpad = await this.spBot.getScratchpadState(item.room)
+        if (!scratchpad.sessionMeta) return
 
-        if (roomState.scratchpad.objects.size < 1000) {
+        if (scratchpad.objects.size < 1000) {
             void this.spBot.sendActions(item.room, [
                 {
                     type: "chat.addMessage",
@@ -129,21 +129,21 @@ export default class Renderer {
             return
         }
 
-        let canvasInputWidth = Math.ceil(roomState.scratchpad.sessionMeta.canvasWidth * CANVAS_INPUT_HEIGHT / roomState.scratchpad.sessionMeta.canvasHeight)
+        let canvasInputWidth = Math.ceil(scratchpad.sessionMeta.canvasWidth * CANVAS_INPUT_HEIGHT / scratchpad.sessionMeta.canvasHeight)
         if (canvasInputWidth % 2 !== 0) {
             canvasInputWidth++
         }
 
         const layers = new Map<number, Layer>()
-        roomState.scratchpad.layerOrder.forEach(layerId => {
-            const layer = roomState.scratchpad.layers.get(layerId)
+        scratchpad.layerOrder.forEach(layerId => {
+            const layer = scratchpad.layers.get(layerId)
             if (!layer) return
-            const hasLines = layer.frames.some(frameId => (roomState.scratchpad.frames.get(frameId)?.objects?.length ?? 0) > 0)
+            const hasLines = layer.frames.some(frameId => (scratchpad.frames.get(frameId)?.objects?.length ?? 0) > 0)
             if (!hasLines) return
             const canvas = new Canvas(canvasInputWidth, CANVAS_INPUT_HEIGHT)
             const ctx = canvas.getContext("2d")
             if (!ctx) return
-            const scale = CANVAS_INPUT_HEIGHT / roomState.scratchpad.sessionMeta!.canvasHeight
+            const scale = CANVAS_INPUT_HEIGHT / scratchpad.sessionMeta!.canvasHeight
             ctx.scale(scale, scale)
             layers.set(layer.layerId, {
                 canvas: canvas,
@@ -162,8 +162,8 @@ export default class Renderer {
         }
 
         let drawingUrl = `scribble.pub/${item.room}`
-        if (roomState.scratchpad.sessionMeta.seqId) {
-            drawingUrl += `/${roomState.scratchpad.sessionMeta.seqId}`
+        if (scratchpad.sessionMeta.seqId) {
+            drawingUrl += `/${scratchpad.sessionMeta.seqId}`
         }
 
         const totalHeight = CANVAS_INPUT_HEIGHT + 20 + LOGO_HEIGHT
@@ -265,9 +265,9 @@ export default class Renderer {
         }
 
         let itemsInBatch = 0
-        for (let object of roomState.scratchpad.objects.values()) {
+        for (let object of scratchpad.objects.values()) {
             if (signal.aborted) break
-            const layer = roomState.scratchpad.frames.get(object.frameId)?.layerId
+            const layer = scratchpad.frames.get(object.frameId)?.layerId
             if (layer === undefined) continue
             const layerCanvas = layers.get(layer)
             if (layerCanvas === undefined) continue
