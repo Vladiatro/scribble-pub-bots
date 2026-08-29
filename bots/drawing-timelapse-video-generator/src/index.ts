@@ -1,4 +1,3 @@
-import {handle} from "hono/aws-lambda"
 import {serve} from "@hono/node-server"
 import {Hono} from "hono"
 import ScribblePubBot from "@scribble-pub/bot-sdk"
